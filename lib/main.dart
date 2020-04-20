@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => LoginScreen(),
           '/topics': (context) => TopicScreen(),
+          '/profile': (context) => ProfileScreen(),
         },
 
         // Theme

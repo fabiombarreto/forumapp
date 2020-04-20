@@ -5,7 +5,6 @@ import '../screens/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TopicsScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -14,13 +13,6 @@ class TopicsScreen extends StatelessWidget {
         if (snap.hasData) {
           List<Topic> topics = [];
           topics = snap.data;
-          if (topics.isEmpty) {
-            Topic vazio = new Topic();
-            vazio.id = 'angular';
-            vazio.img = 'default.png';
-            vazio.title = 'Angular';
-            topics.add(vazio);
-          }
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.deepPurple,
@@ -57,9 +49,9 @@ class TopicItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    var container = Container(
       child: Hero(
-        tag: 'default.png',
+        tag: topic.id ?? 'vazio',
         child: Card(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
@@ -75,7 +67,7 @@ class TopicItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  'assets/covers/angular.png',
+                  'assets/covers/${topic.img}',
                   fit: BoxFit.contain,
                 ),
                 Row(
@@ -85,7 +77,7 @@ class TopicItem extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
-                          'Angular',
+                          topic.title,
                           style: TextStyle(
                               height: 1.5, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.fade,
@@ -104,38 +96,60 @@ class TopicItem extends StatelessWidget {
         ),
       ),
     );
+    return container;
   }
 }
 
 class TopicScreen extends StatelessWidget {
   Topic topic;
 
-  
-
   TopicScreen({this.topic});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
-      body: ListView(children: [
-        Hero(
-          tag: 'angular.png',
-          child: Image.asset('assets/covers/angular.png',
-              width: MediaQuery.of(context).size.width),
+    if (topic != null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
         ),
-        Text(
-          'Angular',
-          style:
-              TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+        body: ListView(children: [
+          Hero(
+            tag: topic.id,
+            child: Image.asset('assets/covers/${topic.img}',
+                width: MediaQuery.of(context).size.width),
+          ),
+          Text(
+            topic.title,
+            style:
+                TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          // QuizList(topic: topic)
+        ]),
+      );
+    }
+    else {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
         ),
-       // QuizList(topic: topic)
-      ]),
-    );
+        body: ListView(children: [
+          Hero(
+            tag: 'vazio',
+            child: Image.asset('assets/covers/default.png',
+                width: MediaQuery.of(context).size.width),
+          ),
+          Text(
+            'Nenhuma Postagem',
+            style:
+                TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          // QuizList(topic: topic)
+        ]),
+      );
+    }
   }
 }
+
 /*
 class QuizList extends StatelessWidget {
   final Topic topic;
@@ -206,7 +220,7 @@ class TopicDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-               // QuizList(topic: topic)
+                // QuizList(topic: topic)
               ],
             );
           },
