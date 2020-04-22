@@ -26,13 +26,16 @@ class TopicsScreen extends StatelessWidget {
               ],
             ),
             drawer: TopicDrawer(topics: snap.data),
-            body: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(20.0),
-              crossAxisSpacing: 10.0,
-              crossAxisCount: 2,
-              children: topics.map((topic) => TopicItem(topic: topic)).toList(),
-            ),
+            body: ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: topics.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height:  50,
+                  child: TopicItem(topic: topics[index]),
+                );
+              }
+              ),
             bottomNavigationBar: AppBottomNav(),
           );
         } else {
@@ -58,7 +61,7 @@ class TopicItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (BuildContext context) => TopicScreen(topic: topic),
+                  builder: (BuildContext context) => PostsScreen(),
                 ),
               );
             },
@@ -66,10 +69,6 @@ class TopicItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  'assets/covers/${topic.img}',
-                  fit: BoxFit.contain,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -113,17 +112,25 @@ class TopicScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         body: ListView(children: [
-          Hero(
-            tag: topic.id,
-            child: Image.asset('assets/covers/${topic.img}',
-                width: MediaQuery.of(context).size.width),
-          ),
-          Text(
-            topic.title,
-            style:
-                TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          // QuizList(topic: topic)
+        /*  Hero(
+            tag: topic.id,*/
+            /*child: Image.asset('assets/covers/${topic.img}',
+                width: MediaQuery.of(context).size.width),*/
+            InkWell (              
+              radius: 50,
+              child: Text(
+                topic.title,
+                style:
+                    TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => PostsScreen(),
+                  ),
+                );
+              }
+            ),
         ]),
       );
     }
@@ -135,8 +142,17 @@ class TopicScreen extends StatelessWidget {
         body: ListView(children: [
           Hero(
             tag: 'vazio',
-            child: Image.asset('assets/covers/default.png',
-                width: MediaQuery.of(context).size.width),
+            /*child: Image.asset('assets/covers/default.png',
+                width: MediaQuery.of(context).size.width),*/
+            child: InkWell (
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => PostsScreen(),
+                  ),
+                );
+              }
+            ),
           ),
           Text(
             'Nenhuma Postagem',
@@ -211,8 +227,7 @@ class TopicDrawer extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 10, left: 10),
                   child: Text(
-                    'Angular',
-                    // textAlign: TextAlign.left,
+                    topic.title,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

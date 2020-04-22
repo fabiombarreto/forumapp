@@ -51,28 +51,55 @@ class Question {
 }
 */
 
+class Post {
+  int id;
+  String text;
+  String authorId;
+  BigInt postId;
+
+  Post({this.id, this.text, this.authorId});
+
+  factory Post.fromMap(Map data) {
+    return Post(
+      id: data['id'] ?? '',
+      authorId: data['authorId'] ?? '',
+      text: data['text']
+       );
+  }
+}
+
 class Topic {
-   String id;
+   int id;
    String title;
-    String description;
-   String img;
+   User author;
   //final List<Quiz> quizzes;
 
-  Topic({ this.id, this.title, this.description, this.img });
+  Topic({ this.id, this.title, this.author });
 
   factory Topic.fromMap(Map data) {
     return Topic(
       id: data['id'] ?? '',
       title: data['title'] ?? '',
-      description: data['description'] ?? '',
-      img: data['img'] ?? 'default.png',
+     // author: data['authorId'].map((v) => User.fromMap(v)),
       //quizzes:  (data['quizzes'] as List ?? []).map((v) => Quiz.fromMap(v)).toList(), //data['quizzes'],
     );
   }
 
 }
 
+class User {
+  String uid;
+  String nome;
 
+  User({this.uid, this.nome});
+
+  factory User.fromMap(Map data) {
+    return User(
+      nome: data['nome'],
+      uid: data['uid']
+      );
+  }
+}
 class Report {
   String uid;
   int total;
