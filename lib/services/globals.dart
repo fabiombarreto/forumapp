@@ -15,6 +15,7 @@ class Global {
     Topic: (data) => Topic.fromMap(data),
     //Quiz: (data) => Quiz.fromMap(data),
     Report: (data) => Report.fromMap(data),
+    Post: (data) => Post.fromMap(data),
   };
 
 
@@ -22,6 +23,8 @@ class Global {
   static final Collection<Topic> topicsRef = Collection<Topic>(path: 'topics');
 
   static final UserData<Report> reportRef = UserData<Report>(collection: 'reports'); 
+
+  static final Collection<Post> postsRef = Collection<Post>(path: 'posts');
 
   
 }

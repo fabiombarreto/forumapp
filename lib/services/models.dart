@@ -54,16 +54,19 @@ class Question {
 class Post {
   int id;
   String text;
-  String authorId;
-  BigInt postId;
+  int authorId;
+  String topicId;
+  String authorName;
 
-  Post({this.id, this.text, this.authorId});
+  Post({this.id, this.text, this.authorId, this.topicId, this.authorName});
 
   factory Post.fromMap(Map data) {
     return Post(
       id: data['id'] ?? '',
       authorId: data['authorId'] ?? '',
-      text: data['text']
+      text: data['text'] ?? '',
+      topicId: data['topicid'] ?? '',
+      authorName: data['authorName'] ?? '',
        );
   }
 }

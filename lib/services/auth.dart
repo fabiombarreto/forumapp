@@ -24,6 +24,11 @@ class AuthService {
       );
 
       FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
       updateUserData(user);
 
       return user;

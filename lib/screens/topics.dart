@@ -61,7 +61,7 @@ class TopicItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (BuildContext context) => PostsScreen(),
+                  builder: (BuildContext context) => PostsScreen(topic),
                 ),
               );
             },
@@ -126,7 +126,7 @@ class TopicScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PostsScreen(),
+                    builder: (BuildContext context) => PostsScreen(topic),
                   ),
                 );
               }
@@ -148,7 +148,7 @@ class TopicScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PostsScreen(),
+                    builder: (BuildContext context) => PostsScreen(topic),
                   ),
                 );
               }
